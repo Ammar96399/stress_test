@@ -25,21 +25,24 @@ def plot_power_cpu_usage(power_file, cpu_file, output_file):
     fig, ax1 = plt.subplots(figsize=(14, 8))
 
     # Plot Power (W) on the primary y-axis
-    color = 'tab:blue'
+    color = sns.color_palette("Set2")[0]
     ax1.set_xlabel('Time')
     ax1.set_ylabel('Power (W)', color=color)
-    sns.lineplot(x='Unix time', y='Power (W)', data=power_df, ax=ax1, color=color, label='Power (W)')
+    line1 = sns.lineplot(x='Unix time', y='Power (W)', data=power_df, ax=ax1, color=color, label='Power (W)')
     ax1.tick_params(axis='y', labelcolor=color)
     ax1.grid(True)
     ax1.set_ylim(0)
+    ax1.get_legend().remove()
 
     # Create a secondary y-axis sharing the same x-axis
     ax2 = ax1.twinx()
-    color = 'tab:red'
+    color = sns.color_palette("Set2")[1]
     ax2.set_ylabel('CPU (%)', color=color)
-    sns.lineplot(x='Timestamp (s)', y='CPU (%)', data=cpu_df, ax=ax2, color=color, label='CPU (%)')
+    line2 = sns.lineplot(x='Timestamp (s)', y='CPU (%)', data=cpu_df, ax=ax2, color=color, label='CPU (%)')
     ax2.tick_params(axis='y', labelcolor=color)
     ax2.set_ylim(0)
+    ax2.get_legend().remove()
+
 
     # Set the x-axis labels and rotate them for better readability
     ax1.set_xlabel('Time')
@@ -47,6 +50,11 @@ def plot_power_cpu_usage(power_file, cpu_file, output_file):
 
     # Set the title of the plot
     plt.title('Power Consumption and CPU Usage Over Time')
+
+
+    lines = line1.get_lines() + line2.get_lines()
+    labels = [l.get_label() for l in lines]
+    ax1.legend(lines, labels, loc='upper right')
 
     # Save the plot to the specified file
     fig.tight_layout()
