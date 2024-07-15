@@ -79,7 +79,7 @@ def process_folders(base_path):
 
 
 # Define the base path where your folders are located
-base_path = 'single_test/rbpi3/ten_values'
+base_path = 'single_test/rbpi5/ten_values'
 
 # Process all folders in the base path
 process_folders(base_path)
