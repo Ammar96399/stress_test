@@ -25,7 +25,11 @@ def process_folders(base_path):
     for i in tqdm(range(len(algos)), desc="Processing algos"):
         folder_path = os.path.join(base_path, "ten_values_"+algos[i])
         if os.path.isdir(folder_path):
-            power_file = os.path.join(folder_path, 'cpu_usage_'+algos[i]+'_classified.csv')
+            if os.path.exists(os.path.join(folder_path, 'cpu_usage_'+algos[i]+'_manually_classified.csv')):
+                power_file = os.path.join(folder_path, 'cpu_usage_'+algos[i]+'_manually_classified.csv')
+            else:
+                power_file = os.path.join(folder_path, 'cpu_usage_'+algos[i]+'_classified.csv')
+
             output_file = os.path.join(folder_path, 'violon_cpu_'+algos[i]+'.png')
 
             if os.path.exists(power_file):

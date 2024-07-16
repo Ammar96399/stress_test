@@ -37,7 +37,7 @@ def process_folders(base_path):
                 print(f"Skipping {folder_path}: missing required files.")
 
 # Define the base path where your folders are located
-base_path = 'single_test/rbpi5/ten_values'
+base_path = 'single_test/rbpi4/ten_values'
 
 # Process all folders in the base path
 process_folders(base_path)
