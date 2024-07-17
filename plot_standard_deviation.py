@@ -18,17 +18,20 @@ def plot_combined_stddev(base_path, output_file):
     combined_data = pd.DataFrame()
 
     for algo in tqdm(algos, desc="Processing algos"):
-        folder_path = os.path.join(base_path, "ten_values_"+algo)
+        folder_path = os.path.join(base_path, "ten_values_" + algo)
         if os.path.isdir(folder_path):
-            csv_file = os.path.join(folder_path, 'cpu_usage_'+algo+'_manually_classified.csv')
+            csv_file = os.path.join(folder_path, 'cpu_usage_' + algo + '_manually_classified.csv')
             if not os.path.exists(csv_file):
-                csv_file = os.path.join(folder_path, 'cpu_usage_'+algo+'_classified.csv')
+                csv_file = os.path.join(folder_path, 'cpu_usage_' + algo + '_classified.csv')
 
             if os.path.exists(csv_file):
                 stddev_data = calculate_stddev_for_algo(csv_file, algo)
                 combined_data = pd.concat([combined_data, stddev_data], ignore_index=True)
             else:
                 print(f"Skipping {folder_path}: missing required files.")
+
+    # Print the table of standard deviations
+    print(combined_data.to_string(index=False))
 
     # Create a figure and a primary axis
     plt.figure(figsize=(14, 8))
